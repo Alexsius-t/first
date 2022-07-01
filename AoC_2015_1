@@ -1,0 +1,50 @@
+/**
+ * You can edit, run, and share this code.
+ * play.kotlinlang.org
+ */
+fun main(args: Array<String>) {
+    
+    val test_0_1 = "(())"
+    val test_0_2 = "()()"
+    val test_3_1 = "(()(()("
+    val test_3_2 = "((("
+    val test_3_3 = "))((((("
+    val test_minus1_1 = "())"
+    val test_minus1_2 = "))("
+    val test_minus3_1 = ")))"
+    val test_minus3_2 = ")())())"
+    
+//     println("0: " + (count(test_0_1) == count(test_0_2) && count(test_0_2) == 0))
+//     println("3: " + (count(test_3_1) == count(test_3_2) && count(test_3_2) == count(test_3_3) && count(test_3_3) == 3))
+//     println("-1: " + (count(test_minus1_1) == count(test_minus1_2) && count(test_minus1_2) == -1))
+//     println("-3: " + (count(test_minus3_1) == count(test_minus3_2) && count(test_minus3_2) == -3))
+    
+//     println("Result: " + count(args[0]))
+    
+    println("### Seconda fase ###")
+    println("** Nota Bene: il risultato deve essere > 0, se = 0 l'input non raggiunge mai il pianto -1")
+    
+    val test_basement_1 = ")"
+    val test_basement_5 = "()())"
+    
+    println("1: " + (basementPosition(test_basement_1) == 1))
+    println("5: " + (basementPosition(test_basement_5) == 5))
+    
+    println("Result: " + basementPosition(args[0]))
+}
+
+fun count (string: String): Int{
+    return string.count{it.equals('(')} - string.count{it.equals(')')}
+}
+fun basementPosition(string: String): Int{
+    if (count(string) > 0) return 0 
+    var floorPosition = 0
+    var basementIndex = 0
+	
+    while (floorPosition > -1){
+        if (string[basementIndex].equals('(')) ++floorPosition else --floorPosition
+        basementIndex++
+    }
+    
+    return basementIndex
+}
