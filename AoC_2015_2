@@ -1,0 +1,61 @@
+/**
+ * You can edit, run, and share this code.
+ * play.kotlinlang.org
+ */
+
+
+/**asd
+ *  Pre 1. Parsing dell'input
+  * 1. Calcolare aree singolarmente
+  * 2. Valutare la più piccola
+  * 3. Calcolare l'area complessiva
+  * 4. Aggiungere al totale
+  */
+fun main(args: Array<String>) {
+    println("**Calc Areas**")
+    
+    val resultTest1 = 34
+    val inputTest1 = "2x3x4"
+    println(inputTest1 + ": " + resultTest1)
+    val test1 = calcRibbon(parseInput(inputTest1))
+    println("Result: " + test1 + " " + (test1 == resultTest1))
+    
+    val resultTest2 = 14
+    val inputTest2 = "1x1x10"
+    println(inputTest2 + ": " + resultTest2)
+    val test2 = calcRibbon(parseInput(inputTest2))
+    println("Result: " + test2 + " " + (test2 == resultTest2))
+    
+	//Dati effettivi
+    var sum = 0
+    for (arg in args){
+    	sum += calcRibbon(parseInput(arg))
+    }
+    
+    println(sum)
+}
+
+fun calcRibbon(sides: List<Int>): Int{
+    val length = sides[0]
+    val height = sides[1]
+    val width = sides[2]
+    val arr1 = sides.toTypedArray()
+    arr1.sort()
+    val wrapRibbon = 2 * arr1[0] + 2 * arr1[1]
+    val bowRibbon = length * height * width
+   	
+    return wrapRibbon + bowRibbon;
+}
+
+//fun calcAreaRectangle(length: Int, height: Int, width: Int): Int{
+//    val lengthSide = length * height;
+//    val topSide = length * width;
+//    val widthSide = width * height;
+//    var smallerSide = minOf(lengthSide, topSide, widthSide);
+//   	
+//    return 2*lengthSide + 2*topSide + 2 * widthSide + smallerSide;
+//}
+
+fun parseInput(string: String): List<Int>{
+	return string.split('x').map{it.toInt()}
+}
