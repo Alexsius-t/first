@@ -1,0 +1,31 @@
+/**
+ * You can edit, run, and share this code.
+ * play.kotlinlang.org
+ */
+fun main(args: Array<String>) {
+    println("Ex 3, Fase 1")
+    var positions: MutableList<Pair<Int, Int>> = mutableListOf(Pair(0,0))
+    var houses = 1
+    for(char in args[0]){
+        val actualPosition = positions.last().parseMove(char)
+//         println(char + " " + actualPosition.toString())
+//         if (positions.count{elem -> elem.equals(actualPosition)} == 1) repeatedPositions++
+        if (!positions.contains(actualPosition)) houses++
+//         println("houses: " + houses)
+        positions.add(actualPosition)
+    }
+    println(houses)
+    println("\n\nFINE")
+}
+
+fun Pair<Int, Int>.parseMove(char: Char): Pair<Int, Int>{
+    var x = this.first
+    var y = this.second
+    when (char){
+        '^' -> y++
+        'v' -> y--
+        '<' -> x--
+        '>' -> x++
+    }
+    return Pair(x,y)
+}
