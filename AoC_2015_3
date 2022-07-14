@@ -3,19 +3,12 @@
  * play.kotlinlang.org
  */
 fun main(args: Array<String>) {
-    println("Ex 3, Fase 1")
-    var positions: MutableList<Pair<Int, Int>> = mutableListOf(Pair(0,0))
-    var houses = 1
-    for(char in args[0]){
-        val actualPosition = positions.last().parseMove(char)
-//         println(char + " " + actualPosition.toString())
-//         if (positions.count{elem -> elem.equals(actualPosition)} == 1) repeatedPositions++
-        if (!positions.contains(actualPosition)) houses++
-//         println("houses: " + houses)
-        positions.add(actualPosition)
-    }
-    println(houses)
-    println("\n\nFINE")
+    println("Ex 3, Fase 2")
+    
+    when (args[0]){
+        "rand" -> runMoves(generateMoves(args[1].toInt()))
+        else -> runMoves(args[0])
+    }    
 }
 
 fun Pair<Int, Int>.parseMove(char: Char): Pair<Int, Int>{
@@ -28,4 +21,37 @@ fun Pair<Int, Int>.parseMove(char: Char): Pair<Int, Int>{
         '>' -> x++
     }
     return Pair(x,y)
+}
+
+fun generateMoves(totalMoves: Int): String{
+    var stringMoves = ""
+    val moves = listOf('^', '>', 'v', '<')
+    for (i in 0..totalMoves){
+        stringMoves += moves[(0..3).random()]
+    }
+    return stringMoves
+}
+
+fun runMoves(moves: String){
+    println("Mosse: " + moves)
+	var santaPositions: MutableList<Pair<Int, Int>> = mutableListOf(Pair(0,0))
+    var botPositions: MutableList<Pair<Int, Int>> = mutableListOf(Pair(0,0))
+    var houses = 1
+    var santaTurn = true
+    for(char in moves){
+        var positions: MutableList<Pair<Int, Int>>
+        when (santaTurn){
+           true -> positions = santaPositions
+           false -> positions = botPositions
+        }
+        val actualPosition = positions.last().parseMove(char)
+//         println(char + " " + actualPosition.toString())
+//         if (positions.count{elem -> elem.equals(actualPosition)} == 1) repeatedPositions++
+        if (!santaPositions.contains(actualPosition) && !botPositions.contains(actualPosition)) houses++
+//         println("houses: " + houses)
+        positions.add(actualPosition)
+        santaTurn = !santaTurn
+    }
+    println(houses)
+    println("\n\nFINE")
 }
